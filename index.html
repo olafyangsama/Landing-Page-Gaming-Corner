@@ -27,7 +27,7 @@
             position: relative;
         }
 
-        /* PERBAIKAN PERFORMA BACKGROUND FIXED UNTUK MOBILE */
+        /* BACKGROUND FIXED UNTUK MOBILE */
         body::before {
             content: "";
             position: fixed;
@@ -151,7 +151,6 @@
             transition: all 0.2s ease; box-shadow: 0 0 10px rgba(0, 255, 255, 0.3); border: none; cursor: pointer;
         }
         .buy-button:hover { background-color: #ffffff; transform: scale(1.05); box-shadow: 0 0 15px rgba(0, 255, 255, 0.6); }
-        .swipe-hint { font-size: 10px; text-align: center; color: #888; margin-top: 5px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
 
         .view-all-btn {
             width: 100%; margin-top: 15px; padding: 12px; border-radius: 12px;
@@ -166,9 +165,7 @@
         .support-btn { color: #ffd700; text-decoration: none; font-size: 14px; font-weight: 700; display: flex; align-items: center; gap: 6px; cursor: pointer; }
 
         .live-donators-section {
-            margin-top: 18px;
-            border-top: 1px solid rgba(0, 255, 255, 0.15);
-            padding-top: 15px;
+            margin-top: 18px; border-top: 1px solid rgba(0, 255, 255, 0.15); padding-top: 15px;
         }
         .live-donators-title {
             font-size: 12px; font-weight: 800; text-transform: uppercase; color: #ffd700;
@@ -220,12 +217,28 @@
         .modal-content-body::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.2); border-radius: 10px; }
         .modal-content-body::-webkit-scrollbar-thumb { background: rgba(0, 255, 255, 0.3); border-radius: 10px; }
         
+        /* FORM INPUT STYLES */
+        .form-group { margin-bottom: 15px; }
+        .form-label { display: block; font-size: 12px; font-weight: 700; color: #00ffff; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px;}
+        .form-input { 
+            width: 100%; background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(0, 255, 255, 0.3);
+            border-radius: 12px; padding: 12px 14px; color: #fff; font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 14px; transition: all 0.3s; outline: none;
+        }
+        .form-input:focus { border-color: #ffd700; box-shadow: 0 0 10px rgba(255, 215, 0, 0.2); }
+        .form-input::placeholder { color: #666; }
+        .form-submit-btn {
+            width: 100%; background-color: #ffd700; color: #000; padding: 14px; border-radius: 12px;
+            font-size: 14px; font-weight: 800; border: none; cursor: pointer; transition: all 0.3s;
+            margin-top: 10px; text-transform: uppercase; letter-spacing: 1px;
+        }
+        .form-submit-btn:hover { background-color: #fff; box-shadow: 0 0 15px rgba(255, 255, 255, 0.5); transform: translateY(-2px); }
+
+        /* ONLINE STORE GRID */
         .store-header { font-size: 18px; font-weight: 800; color: #00ffff; margin: 0 0 20px 0; border-bottom: 1px solid rgba(0,255,255,0.2); padding-bottom: 10px;}
         .store-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
         .store-item {
-            background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(0, 255, 255, 0.15);
-            border-radius: 14px; padding: 12px; display: flex; flex-direction: column; align-items: center; text-align: center;
-            transition: all 0.3s ease; backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+            background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(0, 255, 255, 0.15); border-radius: 14px; padding: 12px; display: flex; flex-direction: column; align-items: center; text-align: center; transition: all 0.3s ease; backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
         }
         .store-item:hover { border-color: #ffd700; transform: translateY(-3px); box-shadow: 0 5px 15px rgba(255, 215, 0, 0.15); }
         .store-item img { width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 10px; margin-bottom: 10px; }
@@ -277,6 +290,34 @@
         </div>
     </div>
 
+    <div class="modal-overlay" id="donate-modal">
+        <div class="modal-container">
+            <button class="modal-close-btn interactive-el" id="close-donate-btn"><i class="fa-solid fa-xmark"></i></button>
+            <div class="modal-content-body">
+                <h3 class="store-header"><i class="fa-solid fa-hand-holding-dollar"></i> Isi Data Donatur</h3>
+                <p style="font-size: 13px; color: #aaa; margin-bottom: 20px;">Data Anda akan dicatat di database kami. Setelah pengisian form selesai, Anda akan diarahkan ke halaman pembayaran.</p>
+                
+                <form id="donate-form">
+                    <div class="form-group">
+                        <label class="form-label">Nama / Nickname</label>
+                        <input type="text" id="d-name" class="form-input interactive-el" placeholder="Masukkan nama Anda" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Jumlah Donasi</label>
+                        <input type="text" id="d-amount" class="form-input interactive-el" placeholder="Contoh: Rp 50.000 / 100 RBX" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Pesan Untuk Komunitas</label>
+                        <textarea id="d-msg" class="form-input interactive-el" placeholder="Tulis pesan penyemangat..." rows="3" required></textarea>
+                    </div>
+                    <button type="submit" class="form-submit-btn interactive-el">Kirim Data & Lanjut Bayar</button>
+                </form>
+
+                <div id="donate-status" style="margin-top: 15px; font-size: 13px; text-align: center; display: none; font-weight: bold;"></div>
+            </div>
+        </div>
+    </div>
+
     <div class="container">
         <header class="profile-header">
             <img src="logoweb.jpg" alt="Gaming Corner Logo" class="logo interactive-el" onerror="this.src='https://via.placeholder.com/100x100.png?text=Logo';">
@@ -324,7 +365,7 @@
                 <h2 class="widget-header-title"><i class="fa-solid fa-heart"></i> Support Us</h2>
                 <div class="support-content">
                     <p class="support-text">Help our community grow bigger!</p>
-                    <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vRyNyubxoQs871zFurRBGfxOwOAOkUbBIAZgOz2TVzcxrAnsjNZ4kR4xFWT7Iiqa1PHqv9VEidnB6Gd/pub?gid=1645547967&single=true&output=csv" target="_blank" rel="noopener noreferrer" class="support-btn interactive-el">Donate <i class="fa-solid fa-arrow-right"></i></a>
+                    <a href="#" id="open-donate-btn" class="support-btn interactive-el">Donate <i class="fa-solid fa-arrow-right"></i></a>
                 </div>
                 
                 <div class="live-donators-section">
@@ -340,40 +381,33 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             
-            /* 1. CONFIG LIVE DATABASE */
+            /* =======================================================
+               1. KONFIGURASI TAMPILAN LIVE DONATUR
+               (Pastikan ini tetap link Publikasi CSV Google Sheets Anda)
+            ======================================================= */
             const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRyNyubxoQs871zFurRBGfxOwOAOkUbBIAZgOz2TVzcxrAnsjNZ4kR4xFWT7Iiqa1PHqv9VEidnB6Gd/pub?gid=1645547967&single=true&output=csv';
 
-            /* Parser CSV Ringan & Aman Mobile */
             function parseCSVLine(text) {
                 let p = '', c = []; let q = false;
                 for (let i = 0; i < text.length; i++) {
                     let ch = text[i];
-                    if (ch === '"') { q = !q; }
-                    else if (ch === ',' && !q) { c.push(p); p = ''; }
-                    else { p += ch; }
+                    if (ch === '"') { q = !q; } else if (ch === ',' && !q) { c.push(p); p = ''; } else { p += ch; }
                 }
                 c.push(p); return c;
             }
 
             async function loadLiveDonators() {
                 const container = document.getElementById('donators-list');
-                if (!container || SHEET_CSV_URL.includes('GANTI_DENGAN_LINK_CSV')) {
-                    container.innerHTML = '<div class="donator-status-text">Sistem donasi siap dikonfigurasi.</div>';
-                    return;
-                }
+                if (!container || SHEET_CSV_URL.includes('GANTI_DENGAN_LINK_CSV')) return;
 
                 try {
-                    const response = await fetch(SHEET_CSV_URL + '?t=' + new Date().getTime()); // Bypass Cache Browser
+                    const response = await fetch(SHEET_CSV_URL + '?t=' + new Date().getTime());
                     const textData = await response.text();
-                    
-                    const lines = textData.split('\n');
-                    lines.shift(); // Hapus baris judul kolom (Header)
-
+                    const lines = textData.split('\n'); lines.shift(); 
                     const validDonations = [];
                     lines.forEach(line => {
                         if(line.trim() !== "") {
                             const columns = parseCSVLine(line);
-                            // Indeks kolom: [0]=Timestamp, [1]=Nama, [2]=Pesan, [3]=Jumlah
                             if(columns[1] && columns[1].trim() !== "") {
                                 validDonations.push({
                                     name: columns[1].replace(/[\r\n]+/g, ""),
@@ -385,37 +419,81 @@
                     });
 
                     if(validDonations.length === 0) {
-                        container.innerHTML = '<div class="donator-status-text">Belum ada data donatur terdaftar.</div>';
-                        return;
+                        container.innerHTML = '<div class="donator-status-text">Belum ada data donatur terdaftar.</div>'; return;
                     }
 
-                    // Balik urutan agar data paling baru muncul paling atas
-                    validDonations.reverse();
-                    container.innerHTML = '';
-
-                    // Ambil 5 donatur terbaru untuk menghemat performa layar HP
+                    validDonations.reverse(); container.innerHTML = '';
                     validDonations.slice(0, 5).forEach(donator => {
-                        const row = document.createElement('div');
-                        row.classList.add('donator-row');
-                        row.innerHTML = `
-                            <div class="donator-top-line">
-                                <span class="d-name">${donator.name}</span>
-                                <span class="d-amount">${donator.amount}</span>
-                            </div>
-                            <p class="d-msg">"${donator.message}"</p>
-                        `;
+                        const row = document.createElement('div'); row.classList.add('donator-row');
+                        row.innerHTML = `<div class="donator-top-line"><span class="d-name">${donator.name}</span><span class="d-amount">${donator.amount}</span></div><p class="d-msg">"${donator.message}"</p>`;
                         container.appendChild(row);
                     });
-
                 } catch (err) {
-                    console.error("Gagal memuat spreadsheet:", err);
-                    container.innerHTML = '<div class="donator-status-text" style="color:#ff3333;">Gagal menyinkronkan data donatur.</div>';
+                    console.error(err); container.innerHTML = '<div class="donator-status-text" style="color:#ff3333;">Gagal menyinkronkan data.</div>';
                 }
             }
-
             loadLiveDonators();
 
-            /* 2. AUDIO MANAGEMENT */
+            /* =======================================================
+               2. KONFIGURASI POPUP INPUT DONASI KE GOOGLE FORM
+            ======================================================= */
+            const donateBtn = document.getElementById('open-donate-btn');
+            const donateModal = document.getElementById('donate-modal');
+            const closeDonateBtn = document.getElementById('close-donate-btn');
+            const donateForm = document.getElementById('donate-form');
+            const donateStatus = document.getElementById('donate-status');
+
+            donateBtn.addEventListener('click', (e) => { e.preventDefault(); donateModal.classList.add('active'); });
+            closeDonateBtn.addEventListener('click', () => donateModal.classList.remove('active'));
+            donateModal.addEventListener('click', (e) => { if(e.target === donateModal) donateModal.classList.remove('active'); });
+
+            donateForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                // Ambil nilai dari inputan
+                const nameVal = document.getElementById('d-name').value;
+                const amountVal = document.getElementById('d-amount').value;
+                const msgVal = document.getElementById('d-msg').value;
+
+                donateStatus.style.display = 'block';
+                donateStatus.style.color = '#ffd700';
+                donateStatus.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Mengirim data Anda...';
+
+                // === KONFIGURASI GOOGLE FORM DI SINI ===
+                // 1. Ganti formURL dengan link form yang diakhiri dengan "formResponse" (Bukan viewform)
+                const formURL = "https://docs.google.com/forms/d/e/1FAIpQLSddU_tI99Fu_5WJsCZGmOGm4q6_sXr5eKPzGD09u-VfgZ7nGQ/formResponse";
+                
+                // 2. Ganti nomor entry sesuai dengan ID di Google Form Anda
+                const formData = new FormData();
+                formData.append("entry.36542736", nameVal);    // Ganti 1111111 dengan ID kolom Nama
+                formData.append("entry.1217578328", msgVal);     // Ganti 2222222 dengan ID kolom Pesan
+                formData.append("entry.1039204004", amountVal);  // Ganti 3333333 dengan ID kolom Jumlah
+
+                fetch(formURL, {
+                    method: "POST",
+                    mode: "no-cors", // Penting agar tidak terblokir sistem keamanan browser
+                    body: formData
+                }).then(() => {
+                    donateStatus.style.color = '#00ff00';
+                    donateStatus.innerHTML = '<i class="fa-solid fa-check"></i> Berhasil! Mengarahkan ke halaman pembayaran...';
+                    
+                    // Setelah sukses terkirim ke Sheets, otomatis buka link Saweria untuk transfer
+                    setTimeout(() => {
+                        window.open("https://saweria.co/olafyangsama", "_blank");
+                        donateModal.classList.remove('active');
+                        donateForm.reset();
+                        donateStatus.style.display = 'none';
+                        loadLiveDonators(); // Refresh daftar live donatur
+                    }, 2000);
+                }).catch(err => {
+                    donateStatus.style.color = '#ff3333';
+                    donateStatus.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Terjadi kesalahan jaringan. Coba lagi.';
+                });
+            });
+
+            /* =======================================================
+               3. AUDIO & MODAL LAINNYA
+            ======================================================= */
             const bgMusic = document.getElementById('bg-music');
             const toggleMusicBtn = document.getElementById('toggle-music-btn');
             const volumeSlider = document.getElementById('volume-slider');
@@ -434,7 +512,6 @@
             toggleMusicBtn.addEventListener('click', (e) => { e.stopPropagation(); bgMusic.paused ? bgMusic.play() : bgMusic.pause(); updateIcon(); });
             volumeSlider.addEventListener('input', (e) => { bgMusic.volume = e.target.value; });
 
-            /* 3. MODALS LOGIC */
             const rulesBtn = document.getElementById('rules-btn'), rulesModal = document.getElementById('rules-modal'), closeFaqBtn = document.getElementById('close-faq-btn');
             const catalogBtn = document.getElementById('open-catalog-btn'), catalogModal = document.getElementById('catalog-modal'), closeCatalogBtn = document.getElementById('close-catalog-btn');
 
@@ -446,7 +523,7 @@
             closeCatalogBtn.addEventListener('click', () => catalogModal.classList.remove('active'));
             catalogModal.addEventListener('click', (e) => { if(e.target === catalogModal) catalogModal.classList.remove('active'); });
 
-            /* 4. SFX ENGINES (EFEK SUARA INTERAKTIF TETAP DIPERTAHANKAN) */
+            /* SFX ENGINES */
             const AudioContext = window.AudioContext || window.webkitAudioContext; let audioCtx;
             function initAudioCtx() { if (!audioCtx) audioCtx = new AudioContext(); if (audioCtx.state === 'suspended') audioCtx.resume(); }
 
