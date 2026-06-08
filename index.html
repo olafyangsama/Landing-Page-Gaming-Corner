@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gaming Corner - Online Game Community</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* CSS RESET & BASE STYLES */
+        *, *::before, *::after { box-sizing: border-box; }
+        
+        body {
+            margin: 0;
+            padding: 40px 20px 100px;
+            min-height: 100dvh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            background-color: #05060a; 
+            background-image: url('backround.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: #ffffff;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            position: relative;
+        }
+
+        /* HIDE DEFAULT CURSOR ON DESKTOP */
+        @media (pointer: fine) {
+            body, a, button, input { cursor: none !important; }
+        }
+
+        /* CUSTOM CURSOR */
+        .custom-cursor {
+            position: fixed;
+            top: 0; left: 0; width: 20px; height: 20px;
+            border: 2px solid #00ffff; border-radius: 50%;
+            pointer-events: none; z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.2s, height 0.2s, background-color 0.2s, border-color 0.2s;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.8), inset 0 0 5px rgba(0, 255, 255, 0.5);
+            display: none;
+        }
+        @media (pointer: fine) { .custom-cursor { display: block; } }
+        .custom-cursor.hovering {
+            width: 45px; height: 45px;
+            background-color: rgba(0, 255, 255, 0.15);
+            border-color: #ffd700;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.8), inset 0 0 8px rgba(255, 215, 0, 0.5);
+        }
+
+        /* EFEK LAYAR SCI-FI */
+        .bg-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: radial-gradient(circle at center, rgba(9, 10, 15, 0.6) 0%, rgba(5, 6, 10, 0.85) 100%); 
+            z-index: -2; pointer-events: none;
+        }
+        .scanlines {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.2) 50%);
+            background-size: 100% 4px; z-index: 998; pointer-events: none; opacity: 0.3;
+        }
+
+        /* RIPPLES (GELOMBANG AIR) */
+        .ripple-container {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: -1; pointer-events: none; overflow: hidden;
+        }
+        .ripple {
+            position: absolute; border: 1px solid rgba(0, 255, 255, 0.4); border-radius: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            animation: rippleAnim 3s cubic-bezier(0.1, 0.8, 0.3, 1) forwards; pointer-events: none;
+        }
+        @keyframes rippleAnim {
+            0% { width: 0; height: 0; opacity: 0.8; box-shadow: inset 0 0 10px rgba(0, 255, 255, 0.3); }
+            50% { border-color: rgba(255, 215, 0, 0.2); }
+            100% { width: 450px; height: 450px; opacity: 0; transform: translate(-50%, -50%) scale(1); }
+        }
+
+        /* KONTROL MUSIK */
+        .music-controller {
+            position: fixed; bottom: 25px; right: 25px; 
+            background: rgba(15, 18, 28, 0.75); backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 255, 255, 0.25); padding: 12px 20px; border-radius: 30px;
+            display: flex; align-items: center; gap: 12px; z-index: 1000;
+            box-shadow: 0 0 25px rgba(0, 255, 255, 0.2); transition: all 0.3s ease;
+        }
+        .toggle-music-btn {
+            background: none; border: none; color: #00ffff; font-size: 16px; padding: 0;
+            width: 24px; height: 24px; transition: all 0.2s ease;
+        }
+        .toggle-music-btn:hover { color: #ffd700; transform: scale(1.15); }
+        .volume-slider { width: 80px; accent-color: #00ffff; height: 4px; }
+
+        /* MAIN CONTAINER */
+        .container { width: 100%; max-width: 430px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; z-index: 1; }
+
+        /* HEADER ANIMATIONS */
+        .profile-header { text-align: center; margin-bottom: 24px; }
+        .logo {
+            width: 105px; height: 105px; border-radius: 50%; object-fit: cover;
+            border: 2px solid #00ffff; box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
+            margin-bottom: 18px; background-color: #1a1a1a; transition: transform 0.5s;
+        }
+        .logo:hover { transform: rotate(360deg) scale(1.05); border-color: #ffd700; box-shadow: 0 0 25px rgba(255, 215, 0, 0.6); }
+        
+        /* UKURAN diperbesar menjadi 36px agar rasio 3:1 dengan join-text (12px) */
+        .title {
+            font-size: 36px; font-weight: 900; letter-spacing: -0.5px; margin: 0 0 6px 0;
+            animation: textFloat 4s ease-in-out infinite, cyberGlow 2s ease-in-out infinite alternate;
+        }
+        .subtitle {
+            font-size: 14px; font-weight: 700; color: #00ffff; margin: 0; text-transform: uppercase;
+            letter-spacing: 2px; animation: textPulse 3s ease-in-out infinite alternate;
+        }
+
+        /* SOSIAL MEDIA & TEKS AJAKAN BARU */
+        .social-links { display: flex; justify-content: center; gap: 40px; margin-bottom: 16px; }
+        .social-icon {
+            color: #ffffff;
+            font-size: 50px; 
+            text-decoration: none;
+            transition: all 0.3s ease;
+            animation: floatIcon 4s ease-in-out infinite; 
+        }
+        .social-icon:nth-child(2) { animation-delay: 1s; }
+        .social-icon:hover { transform: translateY(-8px) scale(1.15) !important; color: #00ffff; filter: drop-shadow(0 0 20px rgba(0, 255, 255, 0.9)); }
+
+        .join-text-container {
+            text-align: center; margin-bottom: 36px;
+        }
+        /* UKURAN diperkecil menjadi 12px dan ANIMASI DIHAPUS */
+        .join-text {
+            font-size: 12px; font-weight: 800; color: #ffd700; text-transform: uppercase;
+            letter-spacing: 1px; margin: 0;
+        }
+
+        @keyframes textFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+        @keyframes floatIcon { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); filter: drop-shadow(0 0 10px rgba(255,255,255,0.2)); } }
+        @keyframes cyberGlow { 0% { text-shadow: 0 0 5px rgba(0, 255, 255, 0.3); } 100% { text-shadow: 0 0 15px rgba(0, 255, 255, 0.6), 0 0 10px #ffd700; } }
+        @keyframes textPulse { 0% { opacity: 0.7; text-shadow: 0 0 2px rgba(255, 215, 0, 0.2); } 100% { opacity: 1; text-shadow: 0 0 15px rgba(255, 215, 0, 0.8); } }
+
+        /* BUTTONS & WIDGETS */
+        .links-group { width: 100%; display: flex; flex-direction: column; gap: 14px; margin-bottom: 36px; }
+        .button-link {
+            display: flex; align-items: center; justify-content: center; width: 100%;
+            background: rgba(18, 22, 35, 0.55); backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 215, 0, 0.25); color: #ffffff; text-decoration: none;
+            padding: 16px 20px; border-radius: 14px; font-size: 15px; font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        .button-link:hover {
+            background: rgba(255, 215, 0, 0.08); border-color: #ffd700; transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.25), inset 0 0 10px rgba(255, 215, 0, 0.1);
+        }
+
+        .widgets-group { width: 100%; display: flex; flex-direction: column; gap: 16px; }
+        .widget-card {
+            background: rgba(15, 18, 28, 0.75); backdrop-filter: blur(10px); border-radius: 18px;
+            padding: 20px; box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(0, 255, 255, 0.15); width: 100%; transition: all 0.3s ease;
+        }
+        .widget-header-title { font-size: 12px; font-weight: 800; text-transform: uppercase; color: #00ffff; margin: 0 0 14px 0; display: flex; align-items: center; gap: 8px; }
+        
+        .event-title { font-size: 16px; font-weight: 700; margin: 0 0 4px; }
+        .event-time { font-size: 13px; color: #aaaaaa; margin: 0; }
+
+        /* ROBLOX SLIDER CATALOG */
+        .catalog-slider-container {
+            width: 100%;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            display: flex;
+            gap: 16px;
+            padding-bottom: 10px;
+            -ms-overflow-style: none;  
+            scrollbar-width: none;  
+        }
+        .catalog-slider-container::-webkit-scrollbar { display: none; }
+        
+        .catalog-slide {
+            min-width: 100%; 
+            scroll-snap-align: center;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .roblox-thumbnail {
+            width: 76px; height: 76px; border-radius: 12px; object-fit: cover;
+            background-color: #111; border: 1px solid #333; flex-shrink: 0;
+        }
+        .product-details { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+        .product-title { font-size: 15px; font-weight: 700; margin: 0; line-height: 1.3; }
+        .product-price { font-size: 14px; font-weight: 700; color: #ffd700; margin: 0 0 4px 0; }
+        
+        .buy-button {
+            background-color: #00ffff; color: #000000; text-decoration: none; padding: 6px 16px;
+            border-radius: 20px; font-size: 12px; font-weight: 800; text-align: center; width: fit-content;
+            transition: all 0.2s ease; box-shadow: 0 0 10px rgba(0, 255, 255, 0.3); border: none; cursor: none;
+        }
+        .buy-button:hover { background-color: #ffffff; transform: scale(1.05); box-shadow: 0 0 15px rgba(0, 255, 255, 0.6); }
+
+        .swipe-hint {
+            font-size: 10px; text-align: center; color: #888; margin-top: 5px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;
+        }
+
+        .view-all-btn {
+            width: 100%; margin-top: 15px; padding: 12px; border-radius: 12px;
+            background: rgba(0, 255, 255, 0.1); border: 1px solid rgba(0, 255, 255, 0.3);
+            color: #00ffff; font-weight: 700; font-size: 13px; cursor: none; transition: all 0.3s ease;
+        }
+        .view-all-btn:hover { background: rgba(0, 255, 255, 0.2); border-color: #00ffff; box-shadow: 0 0 15px rgba(0, 255, 255, 0.2); }
+
+        /* Support Us */
+        .support-content { display: flex; justify-content: space-between; align-items: center; }
+        .support-text { font-size: 14px; font-weight: 500; color: #cccccc; margin: 0; }
+        .support-btn { color: #ffd700; text-decoration: none; font-size: 14px; font-weight: 700; display: flex; align-items: center; gap: 6px; }
+
+        /* MODAL POP-UP STYLES */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(5, 6, 10, 0.85); backdrop-filter: blur(8px);
+            z-index: 2000; display: flex; justify-content: center; align-items: center;
+            opacity: 0; pointer-events: none; transition: opacity 0.4s; padding: 20px;
+        }
+        .modal-overlay.active { opacity: 1; pointer-events: auto; }
+        .modal-container {
+            background: rgba(15, 18, 28, 0.95); border: 2px solid #00ffff;
+            box-shadow: 0 0 35px rgba(0, 255, 255, 0.2), inset 0 0 15px rgba(0, 255, 255, 0.1);
+            border-radius: 20px; width: 100%; max-width: 500px; max-height: 85vh;
+            display: flex; flex-direction: column; position: relative;
+            transform: scale(0.9); transition: transform 0.4s;
+        }
+        .modal-overlay.active .modal-container { transform: scale(1); }
+        .modal-close-btn {
+            position: absolute; top: 15px; right: 15px; background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(0, 255, 255, 0.3); color: #00ffff; width: 32px; height: 32px;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            transition: all 0.2s; z-index: 10; cursor: none;
+        }
+        .modal-close-btn:hover { background: #ff3333; color: #ffffff; border-color: #ff3333; box-shadow: 0 0 15px rgba(255, 51, 51, 0.6); }
+        .modal-content-body { padding: 30px 25px; overflow-y: auto; font-size: 14px; line-height: 1.6; color: #e2e8f0; }
+        .modal-content-body.faq-text { white-space: pre-wrap; }
+        
+        .modal-content-body::-webkit-scrollbar { width: 6px; }
+        .modal-content-body::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.2); border-radius: 10px; }
+        .modal-content-body::-webkit-scrollbar-thumb { background: rgba(0, 255, 255, 0.3); border-radius: 10px; }
+        .modal-content-body::-webkit-scrollbar-thumb:hover { background: #00ffff; }
+
+        /* ONLINE STORE GRID */
+        .store-header { font-size: 18px; font-weight: 800; color: #00ffff; margin: 0 0 20px 0; border-bottom: 1px solid rgba(0,255,255,0.2); padding-bottom: 10px;}
+        .store-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        .store-item {
+            background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(0, 255, 255, 0.15);
+            border-radius: 14px; padding: 12px; display: flex; flex-direction: column; align-items: center; text-align: center;
+            transition: all 0.3s ease;
+        }
+        .store-item:hover { border-color: #ffd700; transform: translateY(-3px); box-shadow: 0 5px 15px rgba(255, 215, 0, 0.15); }
+        .store-item img { width: 100%; aspect-ratio: 1/1; object-fit: cover; border-radius: 10px; margin-bottom: 10px; }
+        .store-item h4 { font-size: 13px; font-weight: 700; margin: 0 0 5px 0; color: #fff; line-height: 1.3;}
+        .store-item p { font-size: 13px; font-weight: 800; color: #ffd700; margin: 0 0 12px 0; }
+        
+        @media (max-width: 360px) {
+            .store-grid { grid-template-columns: 1fr; } 
+        }
+    </style>
+</head>
+<body>
+
+    <div class="custom-cursor" id="custom-cursor"></div>
+
+    <audio id="bg-music" src="musiklatar.mp3" loop autoplay></audio>
+
+    <div class="bg-overlay"></div>
+    <div class="scanlines"></div> 
+    <div class="ripple-container" id="ripple-container"></div>
+
+    <div class="music-controller interactive-el">
+        <button id="toggle-music-btn" class="toggle-music-btn interactive-el" title="Play/Pause Music">
+            <i class="fa-solid fa-play"></i>
+        </button>
+        <input type="range" id="volume-slider" class="volume-slider interactive-el" min="0" max="1" step="0.01" value="0.4" title="Volume">
+    </div>
+
+    <div class="modal-overlay" id="rules-modal">
+        <div class="modal-container">
+            <button class="modal-close-btn interactive-el" id="close-faq-btn"><i class="fa-solid fa-xmark"></i></button>
+            <div class="modal-content-body faq-text">🎮 ︱GAMING CORNER – GENERAL FAQ
+
+❓ What is Gaming Corner?
+A Discord server for game lovers who want to play together, discuss games, share information, and build a positive community.
+
+━━━━━━━━━━━━━━━━━━
+
+📌 How to Get Started?
+1. Read the channel <#1401523280409530369> first.
+2. Go to <#1399437694890934402> and pick your role.
+3. Use channels according to their topics.
+
+━━━━━━━━━━━━━━━━━━
+
+📜 Main Rules
+• Respect everyone.
+• Use channels for their intended purpose.
+• Follow instructions from Admins & Moderators.
+Violations may result in: Warning → Mute → Kick → Ban
+
+━━━━━━━━━━━━━━━━━━
+
+🎮 What Games Are Allowed?
+We welcome all types of games: PC, Mobile, Console, Competitive & Casual.
+
+━━━━━━━━━━━━━━━━━━
+
+🤝 Need Help?
+• Tag or DM an Admin/Moderator <@&1416896896831852614> 
+• Or use the help channel <#1417026610208706632> 
+
+Enjoy gaming and have fun in Gaming Corner! 🎮✨</div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="catalog-modal">
+        <div class="modal-container">
+            <button class="modal-close-btn interactive-el" id="close-catalog-btn"><i class="fa-solid fa-xmark"></i></button>
+            <div class="modal-content-body">
+                <h3 class="store-header"><i class="fa-solid fa-store"></i> Gaming Corner Roblox Store</h3>
+                <div class="store-grid">
+                    <div class="store-item interactive-el">
+                        <img src="atasanputih.jpg" alt="Set Atasan Putih" onerror="this.src='https://via.placeholder.com/150x150.png?text=Set+Atasan+Putih';">
+                        <h4>Set Atasan Putih</h4>
+                        <p>10 RBX</p>
+                        <a href="https://www.roblox.com/catalog/131463115379573" target="_blank" class="buy-button interactive-el">Beli Sekarang</a>
+                    </div>
+                    <div class="store-item interactive-el">
+                        <img src="bawahanputih.jpg" alt="Set Bawahan Putih" onerror="this.src='https://via.placeholder.com/150x150.png?text=Set+Bawahan+Putih';">
+                        <h4>Set Bawahan Putih</h4>
+                        <p>15 RBX</p>
+                        <a href="https://www.roblox.com/catalog/126080799741537" target="_blank" class="buy-button interactive-el">Beli Sekarang</a>
+                    </div>
+                    <div class="store-item interactive-el">
+                        <img src="atasanabu.jpg" alt="Set Atasan Abu" onerror="this.src='https://via.placeholder.com/150x150.png?text=Set+Atasan+Abu';">
+                        <h4>Set Atasan Abu</h4>
+                        <p>20 RBX</p>
+                        <a href="https://www.roblox.com/catalog/96698375665425" target="_blank" class="buy-button interactive-el">Beli Sekarang</a>
+                    </div>
+                    <div class="store-item interactive-el">
+                        <img src="bawahanabu.jpg" alt="Set Bawahan Abu" onerror="this.src='https://via.placeholder.com/150x150.png?text=Set+Bawahan+Abu';">
+                        <h4>Set Bawahan Abu</h4>
+                        <p>25 RBX</p>
+                        <a href="https://www.roblox.com/catalog/99181159593894" target="_blank" class="buy-button interactive-el">Beli Sekarang</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        
+        <header class="profile-header">
+            <img src="logoweb.jpg" alt="Gaming Corner Logo" class="logo interactive-el" onerror="this.src='https://via.placeholder.com/100x100.png?text=Logo';">
+            <h1 class="title">Gaming Corner</h1>
+            <p class="subtitle">Online Game Community</p>
+        </header>
+
+        <!-- POSISI DIUBAH: Ikon media sosial diletakkan terlebih dahulu -->
+        <div class="social-links">
+            <a href="https://www.tiktok.com/@gaming_corner_discord?_r=1&_t=ZS-96vB6cGE2Ts" target="_blank" rel="noopener noreferrer" class="social-icon interactive-el">
+                <i class="fa-brands fa-tiktok"></i>
+            </a>
+            <a href="https://discord.gg/dUuStQt33Z" target="_blank" rel="noopener noreferrer" class="social-icon interactive-el">
+                <i class="fa-brands fa-discord"></i>
+            </a>
+        </div>
+
+        <!-- POSISI DIUBAH: Teks "come join" kini berada di bawah logo media sosial -->
+        <div class="join-text-container">
+            <p class="join-text">Come join to our community!</p>
+        </div>
+
+        <nav class="links-group">
+            <a href="#" class="button-link interactive-el">Join Tournaments</a>
+            <a href="#" class="button-link interactive-el" id="rules-btn">Community Rules & Guidelines</a>
+        </nav>
+
+        <div class="widgets-group">
+            
+            <div class="widget-card interactive-el">
+                <h2 class="widget-header-title"><i class="fa-solid fa-calendar-days"></i> Event Gaming Corner</h2>
+                <div class="event-content">
+                    <p class="event-title">Custom Room Tournament Sunday</p>
+                    <p class="event-time">Live on Discord • 19.00 WIB</p>
+                </div>
+            </div>
+
+            <div class="widget-card">
+                <h2 class="widget-header-title"><i class="fa-solid fa-shirt"></i> Katalog Pakaian Roblox</h2>
+                
+                <div class="catalog-slider-container">
+                    <div class="catalog-slide">
+                        <img src="atasanputih.jpg" class="roblox-thumbnail" onerror="this.src='https://via.placeholder.com/76x76.png?text=Set+Atasa+Putih';">
+                        <div class="product-details">
+                            <h3 class="product-title">Set Atasan Putih</h3>
+                            <p class="product-price">10 RBX</p>
+                            <a href="https://www.roblox.com/catalog/131463115379573" target="_blank" class="buy-button interactive-el">Buy Now</a>
+                        </div>
+                    </div>
+                    <div class="catalog-slide">
+                        <img src="bawahanputih.jpg" class="roblox-thumbnail" onerror="this.src='https://via.placeholder.com/76x76.png?text=Set+Bawahan+Putih';">
+                        <div class="product-details">
+                            <h3 class="product-title">Set Bawahan Putih</h3>
+                            <p class="product-price">10 RBX</p>
+                            <a href="https://www.roblox.com/catalog/126080799741537" target="_blank" class="buy-button interactive-el">Buy Now</a>
+                        </div>
+                    </div>
+                    <div class="catalog-slide">
+                        <img src="atasanabu.jpg" class="roblox-thumbnail" onerror="this.src='https://via.placeholder.com/76x76.png?text=Set+Atasan+Abu';">
+                        <div class="product-details">
+                            <h3 class="product-title">Set Atasan Abu</h3>
+                            <p class="product-price">10 RBX</p>
+                            <a href="https://www.roblox.com/catalog/96698375665425" target="_blank" class="buy-button interactive-el">Buy Now</a>
+                        </div>
+                    </div>
+                    <div class="catalog-slide">
+                        <img src="bawahanabu.jpg" class="roblox-thumbnail" onerror="this.src='https://via.placeholder.com/76x76.png?text=Set+Bawahan+Abu';">
+                        <div class="product-details">
+                            <h3 class="product-title">Set Bawahan Abu</h3>
+                            <p class="product-price">10 RBX</p>
+                            <a href="https://www.roblox.com/catalog/99181159593894" target="_blank" class="buy-button interactive-el">Buy Now</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <p class="swipe-hint">← Geser untuk melihat lainnya →</p>
+                <button class="view-all-btn interactive-el" id="open-catalog-btn">Lihat Semua Katalog</button>
+            </div>
+
+            <div class="widget-card interactive-el">
+                <h2 class="widget-header-title"><i class="fa-solid fa-heart"></i> Support Us</h2>
+                <div class="support-content">
+                    <p class="support-text">Help our community grow bigger!</p>
+                    <a href="https://saweria.co/olafyangsama" target="_blank" rel="noopener noreferrer" class="support-btn interactive-el">Donate <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            
+            /* 1. SISTEM GELOMBANG AIR (RIPPLES) */
+            const rippleContainer = document.getElementById('ripple-container');
+            function createWaterRipple(x, y) {
+                let ripple = document.createElement('div');
+                ripple.classList.add('ripple');
+                ripple.style.left = x + 'px'; ripple.style.top = y + 'px';
+                const randomScale = Math.random() * 0.4 + 0.8;
+                ripple.style.transform = `translate(-50%, -50%) scale(${randomScale})`;
+                rippleContainer.appendChild(ripple);
+                setTimeout(() => { ripple.remove(); }, 3000);
+            }
+            setInterval(() => {
+                createWaterRipple(Math.random() * window.innerWidth, Math.random() * window.innerHeight);
+            }, 1400);
+
+
+            /* 2. LOGIKA AUDIO AUTOPLAY */
+            const bgMusic = document.getElementById('bg-music');
+            const toggleMusicBtn = document.getElementById('toggle-music-btn');
+            const volumeSlider = document.getElementById('volume-slider');
+            bgMusic.volume = volumeSlider.value;
+
+            function updateIcon() {
+                toggleMusicBtn.innerHTML = bgMusic.paused ? '<i class="fa-solid fa-play"></i>' : '<i class="fa-solid fa-pause"></i>';
+            }
+
+            let playPromise = bgMusic.play();
+            if (playPromise !== undefined) {
+                playPromise.then(() => { updateIcon(); }).catch(() => {
+                    const bypassAutoplay = () => {
+                        bgMusic.play().then(() => { updateIcon(); removeBypassListeners(); });
+                    };
+                    function removeBypassListeners() {
+                        document.removeEventListener('click', bypassAutoplay);
+                        document.removeEventListener('mousemove', bypassAutoplay);
+                        document.removeEventListener('touchstart', bypassAutoplay);
+                    }
+                    document.addEventListener('click', bypassAutoplay);
+                    document.addEventListener('mousemove', bypassAutoplay);
+                    document.addEventListener('touchstart', bypassAutoplay);
+                });
+            }
+
+            toggleMusicBtn.addEventListener('click', (e) => {
+                e.stopPropagation(); 
+                bgMusic.paused ? bgMusic.play() : bgMusic.pause();
+                updateIcon();
+            });
+            volumeSlider.addEventListener('input', (e) => { bgMusic.volume = e.target.value; });
+
+
+            /* 3. LOGIKA POP-UP MODAL (FAQ & KATALOG) */
+            const rulesBtn = document.getElementById('rules-btn');
+            const rulesModal = document.getElementById('rules-modal');
+            const closeFaqBtn = document.getElementById('close-faq-btn');
+
+            const catalogBtn = document.getElementById('open-catalog-btn');
+            const catalogModal = document.getElementById('catalog-modal');
+            const closeCatalogBtn = document.getElementById('close-catalog-btn');
+
+            rulesBtn.addEventListener('click', (e) => { e.preventDefault(); rulesModal.classList.add('active'); });
+            closeFaqBtn.addEventListener('click', () => rulesModal.classList.remove('active'));
+            rulesModal.addEventListener('click', (e) => { if(e.target === rulesModal) rulesModal.classList.remove('active'); });
+
+            catalogBtn.addEventListener('click', (e) => { e.preventDefault(); catalogModal.classList.add('active'); });
+            closeCatalogBtn.addEventListener('click', () => catalogModal.classList.remove('active'));
+            catalogModal.addEventListener('click', (e) => { if(e.target === catalogModal) catalogModal.classList.remove('active'); });
+
+
+            /* 4. ANIMASI KURSOR, SUARA SCI-FI & RIPPLE PADA KLIK */
+            const cursor = document.getElementById('custom-cursor');
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px';
+            });
+
+            document.addEventListener('click', (e) => {
+                if(!e.target.closest('.modal-container')) createWaterRipple(e.clientX, e.clientY);
+            });
+
+            const AudioContext = window.AudioContext || window.webkitAudioContext;
+            let audioCtx;
+            function initAudioCtx() {
+                if (!audioCtx) audioCtx = new AudioContext();
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+            }
+
+            function playHoverSFX() {
+                initAudioCtx();
+                const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain();
+                osc.connect(gain); gain.connect(audioCtx.destination);
+                osc.type = 'sine'; osc.frequency.setValueAtTime(800, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(1400, audioCtx.currentTime + 0.08);
+                gain.gain.setValueAtTime(0.015, audioCtx.currentTime); 
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.08);
+                osc.start(); osc.stop(audioCtx.currentTime + 0.08);
+            }
+
+            function playClickSFX() {
+                initAudioCtx();
+                const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain();
+                osc.connect(gain); gain.connect(audioCtx.destination);
+                osc.type = 'sawtooth'; osc.frequency.setValueAtTime(550, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(80, audioCtx.currentTime + 0.18);
+                gain.gain.setValueAtTime(0.04, audioCtx.currentTime); 
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.18);
+                osc.start(); osc.stop(audioCtx.currentTime + 0.18);
+            }
+
+            function applyInteractiveEffects() {
+                const interactives = document.querySelectorAll('.interactive-el, a, button, input');
+                interactives.forEach(el => {
+                    el.addEventListener('mouseenter', () => { cursor.classList.add('hovering'); playHoverSFX(); });
+                    el.addEventListener('mouseleave', () => { cursor.classList.remove('hovering'); });
+                    el.addEventListener('click', () => { playClickSFX(); });
+                });
+            }
+            
+            applyInteractiveEffects();
+        });
+    </script>
+
+</body>
+</html>
