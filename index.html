@@ -40,30 +40,6 @@
             will-change: transform;
         }
 
-        /* HIDE DEFAULT CURSOR ON DESKTOP */
-        @media (pointer: fine) {
-            body, a, button, input { cursor: none !important; }
-        }
-
-        /* CUSTOM CURSOR */
-        .custom-cursor {
-            position: fixed;
-            top: 0; left: 0; width: 20px; height: 20px;
-            border: 2px solid #00ffff; border-radius: 50%;
-            pointer-events: none; z-index: 9999;
-            transform: translate(-50%, -50%);
-            transition: width 0.2s, height 0.2s, background-color 0.2s, border-color 0.2s;
-            box-shadow: 0 0 10px rgba(0, 255, 255, 0.8), inset 0 0 5px rgba(0, 255, 255, 0.5);
-            display: none;
-        }
-        @media (pointer: fine) { .custom-cursor { display: block; } }
-        .custom-cursor.hovering {
-            width: 45px; height: 45px;
-            background-color: rgba(0, 255, 255, 0.15);
-            border-color: #ffd700;
-            box-shadow: 0 0 15px rgba(255, 215, 0, 0.8), inset 0 0 8px rgba(255, 215, 0, 0.5);
-        }
-
         /* EFEK LAYAR SCI-FI */
         .bg-overlay {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
@@ -76,27 +52,6 @@
             background-size: 100% 4px; z-index: 998; pointer-events: none; opacity: 0.3;
         }
 
-        /* RIPPLES (GELOMBANG AIR) - OPTIMIZED WITH GPU ACCELERATION */
-        .ripple-container {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            z-index: -1; pointer-events: none; overflow: hidden;
-        }
-        .ripple {
-            position: absolute; 
-            width: 450px; height: 450px;
-            border: 1px solid rgba(0, 255, 255, 0.4); 
-            border-radius: 50%;
-            pointer-events: none;
-            transform: translate(-50%, -50%) scale(0);
-            animation: rippleAnim 3s cubic-bezier(0.1, 0.8, 0.3, 1) forwards; 
-            will-change: transform, opacity;
-        }
-        @keyframes rippleAnim {
-            0% { opacity: 0.8; transform: translate(-50%, -50%) scale(0); box-shadow: inset 0 0 10px rgba(0, 255, 255, 0.3); }
-            50% { border-color: rgba(255, 215, 0, 0.2); }
-            100% { opacity: 0; transform: translate(-50%, -50%) scale(var(--target-scale, 1)); }
-        }
-
         /* KONTROL MUSIK */
         .music-controller {
             position: fixed; bottom: 25px; right: 25px; 
@@ -107,10 +62,10 @@
         }
         .toggle-music-btn {
             background: none; border: none; color: #00ffff; font-size: 16px; padding: 0;
-            width: 24px; height: 24px; transition: all 0.2s ease;
+            width: 24px; height: 24px; transition: all 0.2s ease; cursor: pointer;
         }
         .toggle-music-btn:hover { color: #ffd700; transform: scale(1.15); }
-        .volume-slider { width: 80px; accent-color: #00ffff; height: 4px; }
+        .volume-slider { width: 80px; accent-color: #00ffff; height: 4px; cursor: pointer; }
 
         /* MAIN CONTAINER */
         .container { width: 100%; max-width: 430px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; z-index: 1; }
@@ -159,6 +114,7 @@
             border: 1px solid rgba(255, 215, 0, 0.25); color: #ffffff; text-decoration: none;
             padding: 16px 20px; border-radius: 14px; font-size: 15px; font-weight: 600;
             transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            cursor: pointer;
         }
         .button-link:hover {
             background: rgba(255, 215, 0, 0.08); border-color: #ffd700; transform: translateY(-3px);
@@ -192,7 +148,7 @@
         .buy-button {
             background-color: #00ffff; color: #000000; text-decoration: none; padding: 6px 16px;
             border-radius: 20px; font-size: 12px; font-weight: 800; text-align: center; width: fit-content;
-            transition: all 0.2s ease; box-shadow: 0 0 10px rgba(0, 255, 255, 0.3); border: none; cursor: none;
+            transition: all 0.2s ease; box-shadow: 0 0 10px rgba(0, 255, 255, 0.3); border: none; cursor: pointer;
         }
         .buy-button:hover { background-color: #ffffff; transform: scale(1.05); box-shadow: 0 0 15px rgba(0, 255, 255, 0.6); }
         .swipe-hint { font-size: 10px; text-align: center; color: #888; margin-top: 5px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
@@ -200,14 +156,14 @@
         .view-all-btn {
             width: 100%; margin-top: 15px; padding: 12px; border-radius: 12px;
             background: rgba(0, 255, 255, 0.1); border: 1px solid rgba(0, 255, 255, 0.3);
-            color: #00ffff; font-weight: 700; font-size: 13px; cursor: none; transition: all 0.3s ease;
+            color: #00ffff; font-weight: 700; font-size: 13px; cursor: pointer; transition: all 0.3s ease;
         }
         .view-all-btn:hover { background: rgba(0, 255, 255, 0.2); border-color: #00ffff; box-shadow: 0 0 15px rgba(0, 255, 255, 0.2); }
 
         /* SUPPORT US & DYNAMIC LIVE DONATUR STYLES */
         .support-content { display: flex; justify-content: space-between; align-items: center; }
         .support-text { font-size: 14px; font-weight: 500; color: #cccccc; margin: 0; }
-        .support-btn { color: #ffd700; text-decoration: none; font-size: 14px; font-weight: 700; display: flex; align-items: center; gap: 6px; }
+        .support-btn { color: #ffd700; text-decoration: none; font-size: 14px; font-weight: 700; display: flex; align-items: center; gap: 6px; cursor: pointer; }
 
         .live-donators-section {
             margin-top: 18px;
@@ -254,7 +210,7 @@
             position: absolute; top: 15px; right: 15px; background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(0, 255, 255, 0.3); color: #00ffff; width: 32px; height: 32px;
             border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            transition: all 0.2s; z-index: 10; cursor: none;
+            transition: all 0.2s; z-index: 10; cursor: pointer;
         }
         .modal-close-btn:hover { background: #ff3333; color: #ffffff; border-color: #ff3333; box-shadow: 0 0 15px rgba(255, 51, 51, 0.6); }
         .modal-content-body { padding: 30px 25px; overflow-y: auto; font-size: 14px; line-height: 1.6; color: #e2e8f0; }
@@ -281,12 +237,10 @@
 </head>
 <body>
 
-    <div class="custom-cursor" id="custom-cursor"></div>
     <audio id="bg-music" src="musiklatar.mp3" loop autoplay></audio>
 
     <div class="bg-overlay"></div>
     <div class="scanlines"></div> 
-    <div class="ripple-container" id="ripple-container"></div>
 
     <div class="music-controller interactive-el">
         <button id="toggle-music-btn" class="toggle-music-btn interactive-el" title="Play/Pause Music">
@@ -370,7 +324,7 @@
                 <h2 class="widget-header-title"><i class="fa-solid fa-heart"></i> Support Us</h2>
                 <div class="support-content">
                     <p class="support-text">Help our community grow bigger!</p>
-                    <a href="https://saweria.co/olafyangsama" target="_blank" rel="noopener noreferrer" class="support-btn interactive-el">Donate <i class="fa-solid fa-arrow-right"></i></a>
+                    <a href="https://docs.google.com/spreadsheets/d/e/2PACX-1vRyNyubxoQs871zFurRBGfxOwOAOkUbBIAZgOz2TVzcxrAnsjNZ4kR4xFWT7Iiqa1PHqv9VEidnB6Gd/pub?gid=1645547967&single=true&output=csv" target="_blank" rel="noopener noreferrer" class="support-btn interactive-el">Donate <i class="fa-solid fa-arrow-right"></i></a>
                 </div>
                 
                 <div class="live-donators-section">
@@ -386,7 +340,7 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             
-            /* 1. CONFIG LIVE DATABASE (Tinggal ganti link di bawah ini) */
+            /* 1. CONFIG LIVE DATABASE */
             const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRyNyubxoQs871zFurRBGfxOwOAOkUbBIAZgOz2TVzcxrAnsjNZ4kR4xFWT7Iiqa1PHqv9VEidnB6Gd/pub?gid=1645547967&single=true&output=csv';
 
             /* Parser CSV Ringan & Aman Mobile */
@@ -435,11 +389,11 @@
                         return;
                     }
 
-                    // Balik urutan agar data paling baru di Google Form muncul paling atas di Web
+                    // Balik urutan agar data paling baru muncul paling atas
                     validDonations.reverse();
                     container.innerHTML = '';
 
-                    // Hanya ambil 5 donatur terbaru untuk menghemat performa layar HP
+                    // Ambil 5 donatur terbaru untuk menghemat performa layar HP
                     validDonations.slice(0, 5).forEach(donator => {
                         const row = document.createElement('div');
                         row.classList.add('donator-row');
@@ -461,20 +415,7 @@
 
             loadLiveDonators();
 
-            /* 2. RIPPLE WATER EFFECT VIA GPU */
-            const rippleContainer = document.getElementById('ripple-container');
-            function createWaterRipple(x, y) {
-                let ripple = document.createElement('div');
-                ripple.classList.add('ripple');
-                ripple.style.left = x + 'px'; ripple.style.top = y + 'px';
-                const randomScale = Math.random() * 0.4 + 0.8;
-                ripple.style.setProperty('--target-scale', randomScale);
-                rippleContainer.appendChild(ripple);
-                setTimeout(() => { ripple.remove(); }, 3000);
-            }
-            setInterval(() => { createWaterRipple(Math.random() * window.innerWidth, Math.random() * window.innerHeight); }, 1400);
-
-            /* 3. AUDIO MANAGEMENT */
+            /* 2. AUDIO MANAGEMENT */
             const bgMusic = document.getElementById('bg-music');
             const toggleMusicBtn = document.getElementById('toggle-music-btn');
             const volumeSlider = document.getElementById('volume-slider');
@@ -493,7 +434,7 @@
             toggleMusicBtn.addEventListener('click', (e) => { e.stopPropagation(); bgMusic.paused ? bgMusic.play() : bgMusic.pause(); updateIcon(); });
             volumeSlider.addEventListener('input', (e) => { bgMusic.volume = e.target.value; });
 
-            /* 4. MODALS LOGIC */
+            /* 3. MODALS LOGIC */
             const rulesBtn = document.getElementById('rules-btn'), rulesModal = document.getElementById('rules-modal'), closeFaqBtn = document.getElementById('close-faq-btn');
             const catalogBtn = document.getElementById('open-catalog-btn'), catalogModal = document.getElementById('catalog-modal'), closeCatalogBtn = document.getElementById('close-catalog-btn');
 
@@ -505,14 +446,7 @@
             closeCatalogBtn.addEventListener('click', () => catalogModal.classList.remove('active'));
             catalogModal.addEventListener('click', (e) => { if(e.target === catalogModal) catalogModal.classList.remove('active'); });
 
-            /* 5. CURSOR DETECTOR FOR DESKTOP ONLY */
-            const cursor = document.getElementById('custom-cursor');
-            if (window.matchMedia('(pointer: fine)').matches) {
-                document.addEventListener('mousemove', (e) => { cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px'; });
-            }
-            document.addEventListener('click', (e) => { if(!e.target.closest('.modal-container')) createWaterRipple(e.clientX, e.clientY); });
-
-            /* SFX ENGINES */
+            /* 4. SFX ENGINES (EFEK SUARA INTERAKTIF TETAP DIPERTAHANKAN) */
             const AudioContext = window.AudioContext || window.webkitAudioContext; let audioCtx;
             function initAudioCtx() { if (!audioCtx) audioCtx = new AudioContext(); if (audioCtx.state === 'suspended') audioCtx.resume(); }
 
@@ -534,8 +468,7 @@
 
             function applyInteractiveEffects() {
                 document.querySelectorAll('.interactive-el, a, button, input').forEach(el => {
-                    el.addEventListener('mouseenter', () => { if(window.matchMedia('(pointer: fine)').matches) { cursor.classList.add('hovering'); playHoverSFX(); } });
-                    el.addEventListener('mouseleave', () => { cursor.classList.remove('hovering'); });
+                    el.addEventListener('mouseenter', () => { if(window.matchMedia('(pointer: fine)').matches) { playHoverSFX(); } });
                     el.addEventListener('click', () => { playClickSFX(); });
                 });
             }
