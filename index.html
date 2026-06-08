@@ -83,13 +83,13 @@
         }
         .ripple {
             position: absolute; 
-            width: 450px; height: 450px; /* Ukuran statis awal */
+            width: 450px; height: 450px;
             border: 1px solid rgba(0, 255, 255, 0.4); 
             border-radius: 50%;
             pointer-events: none;
             transform: translate(-50%, -50%) scale(0);
             animation: rippleAnim 3s cubic-bezier(0.1, 0.8, 0.3, 1) forwards; 
-            will-change: transform, opacity; /* Memaksa render via GPU */
+            will-change: transform, opacity;
         }
         @keyframes rippleAnim {
             0% { opacity: 0.8; transform: translate(-50%, -50%) scale(0); box-shadow: inset 0 0 10px rgba(0, 255, 255, 0.3); }
@@ -134,24 +134,17 @@
             letter-spacing: 2px; animation: textPulse 3s ease-in-out infinite alternate;
         }
 
-        /* SOSIAL MEDIA & TEKS AJAKAN BARU */
+        /* SOSIAL MEDIA */
         .social-links { display: flex; justify-content: center; gap: 40px; margin-bottom: 16px; }
         .social-icon {
-            color: #ffffff;
-            font-size: 50px; 
-            text-decoration: none;
-            transition: all 0.3s ease;
-            animation: floatIcon 4s ease-in-out infinite; 
-            will-change: transform;
+            color: #ffffff; font-size: 50px; text-decoration: none; transition: all 0.3s ease;
+            animation: floatIcon 4s ease-in-out infinite; will-change: transform;
         }
         .social-icon:nth-child(2) { animation-delay: 1s; }
         .social-icon:hover { transform: translateY(-8px) scale(1.15) !important; color: #00ffff; filter: drop-shadow(0 0 20px rgba(0, 255, 255, 0.9)); }
 
         .join-text-container { text-align: center; margin-bottom: 36px; }
-        .join-text {
-            font-size: 12px; font-weight: 800; color: #ffd700; text-transform: uppercase;
-            letter-spacing: 1px; margin: 0;
-        }
+        .join-text { font-size: 12px; font-weight: 800; color: #ffd700; text-transform: uppercase; letter-spacing: 1px; margin: 0; }
 
         @keyframes textFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
         @keyframes floatIcon { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); filter: drop-shadow(0 0 10px rgba(255,255,255,0.2)); } }
@@ -185,28 +178,13 @@
 
         /* ROBLOX SLIDER CATALOG */
         .catalog-slider-container {
-            width: 100%;
-            overflow-x: auto;
-            scroll-snap-type: x mandatory;
-            display: flex;
-            gap: 16px;
-            padding-bottom: 10px;
-            -ms-overflow-style: none;  
-            scrollbar-width: none;  
+            width: 100%; overflow-x: auto; scroll-snap-type: x mandatory; display: flex; gap: 16px; padding-bottom: 10px;
+            -ms-overflow-style: none; scrollbar-width: none;  
         }
         .catalog-slider-container::-webkit-scrollbar { display: none; }
         
-        .catalog-slide {
-            min-width: 100%; 
-            scroll-snap-align: center;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-        .roblox-thumbnail {
-            width: 76px; height: 76px; border-radius: 12px; object-fit: cover;
-            background-color: #111; border: 1px solid #333; flex-shrink: 0;
-        }
+        .catalog-slide { min-width: 100%; scroll-snap-align: center; display: flex; align-items: center; gap: 16px; }
+        .roblox-thumbnail { width: 76px; height: 76px; border-radius: 12px; object-fit: cover; background-color: #111; border: 1px solid #333; flex-shrink: 0; }
         .product-details { flex: 1; display: flex; flex-direction: column; gap: 4px; }
         .product-title { font-size: 15px; font-weight: 700; margin: 0; line-height: 1.3; }
         .product-price { font-size: 14px; font-weight: 700; color: #ffd700; margin: 0 0 4px 0; }
@@ -217,10 +195,7 @@
             transition: all 0.2s ease; box-shadow: 0 0 10px rgba(0, 255, 255, 0.3); border: none; cursor: none;
         }
         .buy-button:hover { background-color: #ffffff; transform: scale(1.05); box-shadow: 0 0 15px rgba(0, 255, 255, 0.6); }
-
-        .swipe-hint {
-            font-size: 10px; text-align: center; color: #888; margin-top: 5px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;
-        }
+        .swipe-hint { font-size: 10px; text-align: center; color: #888; margin-top: 5px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
 
         .view-all-btn {
             width: 100%; margin-top: 15px; padding: 12px; border-radius: 12px;
@@ -229,10 +204,35 @@
         }
         .view-all-btn:hover { background: rgba(0, 255, 255, 0.2); border-color: #00ffff; box-shadow: 0 0 15px rgba(0, 255, 255, 0.2); }
 
-        /* Support Us */
+        /* SUPPORT US & DYNAMIC LIVE DONATUR STYLES */
         .support-content { display: flex; justify-content: space-between; align-items: center; }
         .support-text { font-size: 14px; font-weight: 500; color: #cccccc; margin: 0; }
         .support-btn { color: #ffd700; text-decoration: none; font-size: 14px; font-weight: 700; display: flex; align-items: center; gap: 6px; }
+
+        .live-donators-section {
+            margin-top: 18px;
+            border-top: 1px solid rgba(0, 255, 255, 0.15);
+            padding-top: 15px;
+        }
+        .live-donators-title {
+            font-size: 12px; font-weight: 800; text-transform: uppercase; color: #ffd700;
+            margin: 0 0 12px 0; display: flex; align-items: center; gap: 6px; letter-spacing: 0.5px;
+        }
+        .donators-container {
+            display: flex; flex-direction: column; gap: 8px; max-height: 190px;
+            overflow-y: auto; scrollbar-width: none; -ms-overflow-style: none;
+        }
+        .donators-container::-webkit-scrollbar { display: none; }
+        
+        .donator-row {
+            background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 10px; padding: 10px 14px; display: flex; flex-direction: column; gap: 3px;
+        }
+        .donator-top-line { display: flex; justify-content: space-between; font-size: 13px; font-weight: 700; }
+        .d-name { color: #ffffff; }
+        .d-amount { color: #00ffff; font-weight: 800; font-size: 12px; }
+        .d-msg { font-size: 12px; color: #aaaaaa; margin: 0; font-style: italic; word-break: break-word; }
+        .donator-status-text { font-size: 12px; color: #666666; text-align: center; padding: 15px 0; }
 
         /* MODAL POP-UP STYLES */
         .modal-overlay {
@@ -263,9 +263,7 @@
         .modal-content-body::-webkit-scrollbar { width: 6px; }
         .modal-content-body::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.2); border-radius: 10px; }
         .modal-content-body::-webkit-scrollbar-thumb { background: rgba(0, 255, 255, 0.3); border-radius: 10px; }
-        .modal-content-body::-webkit-scrollbar-thumb:hover { background: #00ffff; }
-
-        /* ONLINE STORE GRID */
+        
         .store-header { font-size: 18px; font-weight: 800; color: #00ffff; margin: 0 0 20px 0; border-bottom: 1px solid rgba(0,255,255,0.2); padding-bottom: 10px;}
         .store-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
         .store-item {
@@ -284,7 +282,6 @@
 <body>
 
     <div class="custom-cursor" id="custom-cursor"></div>
-
     <audio id="bg-music" src="musiklatar.mp3" loop autoplay></audio>
 
     <div class="bg-overlay"></div>
@@ -301,7 +298,7 @@
     <div class="modal-overlay" id="rules-modal">
         <div class="modal-container">
             <button class="modal-close-btn interactive-el" id="close-faq-btn"><i class="fa-solid fa-xmark"></i></button>
-            <div class="modal-content-body faq-text">... (Konten General FAQ tetap sama seperti bawaan) ...</div>
+            <div class="modal-content-body faq-text">... (Konten General FAQ tetap sama) ...</div>
         </div>
     </div>
 
@@ -313,27 +310,13 @@
                 <div class="store-grid">
                     <div class="store-item interactive-el">
                         <img src="atasanputih.jpg" alt="Set Atasan Putih" onerror="this.src='https://via.placeholder.com/150x150.png?text=Set+Atasan+Putih';">
-                        <h4>Set Atasan Putih</h4>
-                        <p>10 RBX</p>
+                        <h4>Set Atasan Putih</h4><p>10 RBX</p>
                         <a href="https://www.roblox.com/catalog/131463115379573" target="_blank" class="buy-button interactive-el">Beli Sekarang</a>
                     </div>
                     <div class="store-item interactive-el">
                         <img src="bawahanputih.jpg" alt="Set Bawahan Putih" onerror="this.src='https://via.placeholder.com/150x150.png?text=Set+Bawahan+Putih';">
-                        <h4>Set Bawahan Putih</h4>
-                        <p>15 RBX</p>
+                        <h4>Set Bawahan Putih</h4><p>15 RBX</p>
                         <a href="https://www.roblox.com/catalog/126080799741537" target="_blank" class="buy-button interactive-el">Beli Sekarang</a>
-                    </div>
-                    <div class="store-item interactive-el">
-                        <img src="atasanabu.jpg" alt="Set Atasan Abu" onerror="this.src='https://via.placeholder.com/150x150.png?text=Set+Atasan+Abu';">
-                        <h4>Set Atasan Abu</h4>
-                        <p>20 RBX</p>
-                        <a href="https://www.roblox.com/catalog/96698375665425" target="_blank" class="buy-button interactive-el">Beli Sekarang</a>
-                    </div>
-                    <div class="store-item interactive-el">
-                        <img src="bawahanabu.jpg" alt="Set Bawahan Abu" onerror="this.src='https://via.placeholder.com/150x150.png?text=Set+Bawahan+Abu';">
-                        <h4>Set Bawahan Abu</h4>
-                        <p>25 RBX</p>
-                        <a href="https://www.roblox.com/catalog/99181159593894" target="_blank" class="buy-button interactive-el">Beli Sekarang</a>
                     </div>
                 </div>
             </div>
@@ -348,17 +331,11 @@
         </header>
 
         <div class="social-links">
-            <a href="https://www.tiktok.com/@gaming_corner_discord?_r=1&_t=ZS-96vB6cGE2Ts" target="_blank" rel="noopener noreferrer" class="social-icon interactive-el">
-                <i class="fa-brands fa-tiktok"></i>
-            </a>
-            <a href="https://discord.gg/dUuStQt33Z" target="_blank" rel="noopener noreferrer" class="social-icon interactive-el">
-                <i class="fa-brands fa-discord"></i>
-            </a>
+            <a href="https://www.tiktok.com/@gaming_corner_discord?_r=1&_t=ZS-96vB6cGE2Ts" target="_blank" rel="noopener noreferrer" class="social-icon interactive-el"><i class="fa-brands fa-tiktok"></i></a>
+            <a href="https://discord.gg/dUuStQt33Z" target="_blank" rel="noopener noreferrer" class="social-icon interactive-el"><i class="fa-brands fa-discord"></i></a>
         </div>
 
-        <div class="join-text-container">
-            <p class="join-text">Come join to our community!</p>
-        </div>
+        <div class="join-text-container"><p class="join-text">Come join to our community!</p></div>
 
         <nav class="links-group">
             <a href="#" class="button-link interactive-el">Join Tournaments</a>
@@ -380,33 +357,8 @@
                     <div class="catalog-slide">
                         <img src="atasanputih.jpg" class="roblox-thumbnail" onerror="this.src='https://via.placeholder.com/76x76.png?text=Set+Atasa+Putih';">
                         <div class="product-details">
-                            <h3 class="product-title">Set Atasan Putih</h3>
-                            <p class="product-price">10 RBX</p>
+                            <h3 class="product-title">Set Atasan Putih</h3><p class="product-price">10 RBX</p>
                             <a href="https://www.roblox.com/catalog/131463115379573" target="_blank" class="buy-button interactive-el">Buy Now</a>
-                        </div>
-                    </div>
-                    <div class="catalog-slide">
-                        <img src="bawahanputih.jpg" class="roblox-thumbnail" onerror="this.src='https://via.placeholder.com/76x76.png?text=Set+Bawahan+Putih';">
-                        <div class="product-details">
-                            <h3 class="product-title">Set Bawahan Putih</h3>
-                            <p class="product-price">10 RBX</p>
-                            <a href="https://www.roblox.com/catalog/126080799741537" target="_blank" class="buy-button interactive-el">Buy Now</a>
-                        </div>
-                    </div>
-                    <div class="catalog-slide">
-                        <img src="atasanabu.jpg" class="roblox-thumbnail" onerror="this.src='https://via.placeholder.com/76x76.png?text=Set+Atasan+Abu';">
-                        <div class="product-details">
-                            <h3 class="product-title">Set Atasan Abu</h3>
-                            <p class="product-price">10 RBX</p>
-                            <a href="https://www.roblox.com/catalog/96698375665425" target="_blank" class="buy-button interactive-el">Buy Now</a>
-                        </div>
-                    </div>
-                    <div class="catalog-slide">
-                        <img src="bawahanabu.jpg" class="roblox-thumbnail" onerror="this.src='https://via.placeholder.com/76x76.png?text=Set+Bawahan+Abu';">
-                        <div class="product-details">
-                            <h3 class="product-title">Set Bawahan Abu</h3>
-                            <p class="product-price">10 RBX</p>
-                            <a href="https://www.roblox.com/catalog/99181159593894" target="_blank" class="buy-button interactive-el">Buy Now</a>
                         </div>
                     </div>
                 </div>
@@ -414,11 +366,18 @@
                 <button class="view-all-btn interactive-el" id="open-catalog-btn">Lihat Semua Katalog</button>
             </div>
 
-            <div class="widget-card interactive-el">
+            <div class="widget-card">
                 <h2 class="widget-header-title"><i class="fa-solid fa-heart"></i> Support Us</h2>
                 <div class="support-content">
                     <p class="support-text">Help our community grow bigger!</p>
                     <a href="https://saweria.co/olafyangsama" target="_blank" rel="noopener noreferrer" class="support-btn interactive-el">Donate <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+                
+                <div class="live-donators-section">
+                    <h3 class="live-donators-title"><i class="fa-solid fa-crown" style="color:#ffd700;"></i> Donatur Terbaru</h3>
+                    <div class="donators-container" id="donators-list">
+                        <div class="donator-status-text">Memuat data donatur terbaru...</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -427,67 +386,116 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             
-            /* 1. SISTEM GELOMBANG AIR (RIPPLES) - MENGGUNAKAN CSS VARIABLES & GPU SCALE */
+            /* 1. CONFIG LIVE DATABASE (Tinggal ganti link di bawah ini) */
+            const SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRyNyubxoQs871zFurRBGfxOwOAOkUbBIAZgOz2TVzcxrAnsjNZ4kR4xFWT7Iiqa1PHqv9VEidnB6Gd/pub?gid=1645547967&single=true&output=csv';
+
+            /* Parser CSV Ringan & Aman Mobile */
+            function parseCSVLine(text) {
+                let p = '', c = []; let q = false;
+                for (let i = 0; i < text.length; i++) {
+                    let ch = text[i];
+                    if (ch === '"') { q = !q; }
+                    else if (ch === ',' && !q) { c.push(p); p = ''; }
+                    else { p += ch; }
+                }
+                c.push(p); return c;
+            }
+
+            async function loadLiveDonators() {
+                const container = document.getElementById('donators-list');
+                if (!container || SHEET_CSV_URL.includes('GANTI_DENGAN_LINK_CSV')) {
+                    container.innerHTML = '<div class="donator-status-text">Sistem donasi siap dikonfigurasi.</div>';
+                    return;
+                }
+
+                try {
+                    const response = await fetch(SHEET_CSV_URL + '?t=' + new Date().getTime()); // Bypass Cache Browser
+                    const textData = await response.text();
+                    
+                    const lines = textData.split('\n');
+                    lines.shift(); // Hapus baris judul kolom (Header)
+
+                    const validDonations = [];
+                    lines.forEach(line => {
+                        if(line.trim() !== "") {
+                            const columns = parseCSVLine(line);
+                            // Indeks kolom: [0]=Timestamp, [1]=Nama, [2]=Pesan, [3]=Jumlah
+                            if(columns[1] && columns[1].trim() !== "") {
+                                validDonations.push({
+                                    name: columns[1].replace(/[\r\n]+/g, ""),
+                                    message: columns[2] ? columns[2].replace(/[\r\n]+/g, "") : "-",
+                                    amount: columns[3] ? columns[3].replace(/[\r\n]+/g, "") : ""
+                                });
+                            }
+                        }
+                    });
+
+                    if(validDonations.length === 0) {
+                        container.innerHTML = '<div class="donator-status-text">Belum ada data donatur terdaftar.</div>';
+                        return;
+                    }
+
+                    // Balik urutan agar data paling baru di Google Form muncul paling atas di Web
+                    validDonations.reverse();
+                    container.innerHTML = '';
+
+                    // Hanya ambil 5 donatur terbaru untuk menghemat performa layar HP
+                    validDonations.slice(0, 5).forEach(donator => {
+                        const row = document.createElement('div');
+                        row.classList.add('donator-row');
+                        row.innerHTML = `
+                            <div class="donator-top-line">
+                                <span class="d-name">${donator.name}</span>
+                                <span class="d-amount">${donator.amount}</span>
+                            </div>
+                            <p class="d-msg">"${donator.message}"</p>
+                        `;
+                        container.appendChild(row);
+                    });
+
+                } catch (err) {
+                    console.error("Gagal memuat spreadsheet:", err);
+                    container.innerHTML = '<div class="donator-status-text" style="color:#ff3333;">Gagal menyinkronkan data donatur.</div>';
+                }
+            }
+
+            loadLiveDonators();
+
+            /* 2. RIPPLE WATER EFFECT VIA GPU */
             const rippleContainer = document.getElementById('ripple-container');
             function createWaterRipple(x, y) {
                 let ripple = document.createElement('div');
                 ripple.classList.add('ripple');
-                ripple.style.left = x + 'px'; 
-                ripple.style.top = y + 'px';
-                
+                ripple.style.left = x + 'px'; ripple.style.top = y + 'px';
                 const randomScale = Math.random() * 0.4 + 0.8;
-                // Mengirim variabel ke CSS agar diproses langsung secara hardware-accelerated
                 ripple.style.setProperty('--target-scale', randomScale);
-                
                 rippleContainer.appendChild(ripple);
                 setTimeout(() => { ripple.remove(); }, 3000);
             }
-            setInterval(() => {
-                createWaterRipple(Math.random() * window.innerWidth, Math.random() * window.innerHeight);
-            }, 1400);
+            setInterval(() => { createWaterRipple(Math.random() * window.innerWidth, Math.random() * window.innerHeight); }, 1400);
 
-            /* 2. LOGIKA AUDIO AUTOPLAY */
+            /* 3. AUDIO MANAGEMENT */
             const bgMusic = document.getElementById('bg-music');
             const toggleMusicBtn = document.getElementById('toggle-music-btn');
             const volumeSlider = document.getElementById('volume-slider');
             bgMusic.volume = volumeSlider.value;
 
-            function updateIcon() {
-                toggleMusicBtn.innerHTML = bgMusic.paused ? '<i class="fa-solid fa-play"></i>' : '<i class="fa-solid fa-pause"></i>';
-            }
+            function updateIcon() { toggleMusicBtn.innerHTML = bgMusic.paused ? '<i class="fa-solid fa-play"></i>' : '<i class="fa-solid fa-pause"></i>'; }
 
             let playPromise = bgMusic.play();
             if (playPromise !== undefined) {
                 playPromise.then(() => { updateIcon(); }).catch(() => {
-                    const bypassAutoplay = () => {
-                        bgMusic.play().then(() => { updateIcon(); removeBypassListeners(); });
-                    };
-                    function removeBypassListeners() {
-                        document.removeEventListener('click', bypassAutoplay);
-                        document.removeEventListener('mousemove', bypassAutoplay);
-                        document.removeEventListener('touchstart', bypassAutoplay);
-                    }
-                    document.addEventListener('click', bypassAutoplay);
-                    document.addEventListener('mousemove', bypassAutoplay);
-                    document.addEventListener('touchstart', bypassAutoplay);
+                    const bypass = () => { bgMusic.play().then(() => { updateIcon(); ["click","mousemove","touchstart"].forEach(ev => document.removeEventListener(ev, bypass)); }); };
+                    ["click","mousemove","touchstart"].forEach(ev => document.addEventListener(ev, bypass));
                 });
             }
 
-            toggleMusicBtn.addEventListener('click', (e) => {
-                e.stopPropagation(); 
-                bgMusic.paused ? bgMusic.play() : bgMusic.pause();
-                updateIcon();
-            });
+            toggleMusicBtn.addEventListener('click', (e) => { e.stopPropagation(); bgMusic.paused ? bgMusic.play() : bgMusic.pause(); updateIcon(); });
             volumeSlider.addEventListener('input', (e) => { bgMusic.volume = e.target.value; });
 
-            /* 3. LOGIKA POP-UP MODAL (FAQ & KATALOG) */
-            const rulesBtn = document.getElementById('rules-btn');
-            const rulesModal = document.getElementById('rules-modal');
-            const closeFaqBtn = document.getElementById('close-faq-btn');
-
-            const catalogBtn = document.getElementById('open-catalog-btn');
-            const catalogModal = document.getElementById('catalog-modal');
-            const closeCatalogBtn = document.getElementById('close-catalog-btn');
+            /* 4. MODALS LOGIC */
+            const rulesBtn = document.getElementById('rules-btn'), rulesModal = document.getElementById('rules-modal'), closeFaqBtn = document.getElementById('close-faq-btn');
+            const catalogBtn = document.getElementById('open-catalog-btn'), catalogModal = document.getElementById('catalog-modal'), closeCatalogBtn = document.getElementById('close-catalog-btn');
 
             rulesBtn.addEventListener('click', (e) => { e.preventDefault(); rulesModal.classList.add('active'); });
             closeFaqBtn.addEventListener('click', () => rulesModal.classList.remove('active'));
@@ -497,63 +505,42 @@
             closeCatalogBtn.addEventListener('click', () => catalogModal.classList.remove('active'));
             catalogModal.addEventListener('click', (e) => { if(e.target === catalogModal) catalogModal.classList.remove('active'); });
 
-            /* 4. ANIMASI KURSOR (HANYA AKTIF DI DESKTOP - MENCEGAH LAG MOBILE) */
+            /* 5. CURSOR DETECTOR FOR DESKTOP ONLY */
             const cursor = document.getElementById('custom-cursor');
             if (window.matchMedia('(pointer: fine)').matches) {
-                document.addEventListener('mousemove', (e) => {
-                    cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px';
-                });
+                document.addEventListener('mousemove', (e) => { cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px'; });
             }
+            document.addEventListener('click', (e) => { if(!e.target.closest('.modal-container')) createWaterRipple(e.clientX, e.clientY); });
 
-            document.addEventListener('click', (e) => {
-                if(!e.target.closest('.modal-container')) createWaterRipple(e.clientX, e.clientY);
-            });
-
-            const AudioContext = window.AudioContext || window.webkitAudioContext;
-            let audioCtx;
-            function initAudioCtx() {
-                if (!audioCtx) audioCtx = new AudioContext();
-                if (audioCtx.state === 'suspended') audioCtx.resume();
-            }
+            /* SFX ENGINES */
+            const AudioContext = window.AudioContext || window.webkitAudioContext; let audioCtx;
+            function initAudioCtx() { if (!audioCtx) audioCtx = new AudioContext(); if (audioCtx.state === 'suspended') audioCtx.resume(); }
 
             function playHoverSFX() {
-                initAudioCtx();
-                const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain();
-                osc.connect(gain); gain.connect(audioCtx.destination);
-                osc.type = 'sine'; osc.frequency.setValueAtTime(800, audioCtx.currentTime);
-                osc.frequency.exponentialRampToValueAtTime(1400, audioCtx.currentTime + 0.08);
-                gain.gain.setValueAtTime(0.015, audioCtx.currentTime); 
-                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.08);
+                initAudioCtx(); const osc = audioCtx.createOscillator(), gain = audioCtx.createGain();
+                osc.connect(gain); gain.connect(audioCtx.destination); osc.type = 'sine';
+                osc.frequency.setValueAtTime(800, audioCtx.currentTime); osc.frequency.exponentialRampToValueAtTime(1400, audioCtx.currentTime + 0.08);
+                gain.gain.setValueAtTime(0.015, audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.08);
                 osc.start(); osc.stop(audioCtx.currentTime + 0.08);
             }
 
             function playClickSFX() {
-                initAudioCtx();
-                const osc = audioCtx.createOscillator(); const gain = audioCtx.createGain();
-                osc.connect(gain); gain.connect(audioCtx.destination);
-                osc.type = 'sawtooth'; osc.frequency.setValueAtTime(550, audioCtx.currentTime);
-                osc.frequency.exponentialRampToValueAtTime(80, audioCtx.currentTime + 0.18);
-                gain.gain.setValueAtTime(0.04, audioCtx.currentTime); 
-                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.18);
+                initAudioCtx(); const osc = audioCtx.createOscillator(), gain = audioCtx.createGain();
+                osc.connect(gain); gain.connect(audioCtx.destination); osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(550, audioCtx.currentTime); osc.frequency.exponentialRampToValueAtTime(80, audioCtx.currentTime + 0.18);
+                gain.gain.setValueAtTime(0.04, audioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.18);
                 osc.start(); osc.stop(audioCtx.currentTime + 0.18);
             }
 
             function applyInteractiveEffects() {
-                const interactives = document.querySelectorAll('.interactive-el, a, button, input');
-                interactives.forEach(el => {
-                    el.addEventListener('mouseenter', () => { 
-                        if(window.matchMedia('(pointer: fine)').matches) {
-                            cursor.classList.add('hovering'); playHoverSFX(); 
-                        }
-                    });
+                document.querySelectorAll('.interactive-el, a, button, input').forEach(el => {
+                    el.addEventListener('mouseenter', () => { if(window.matchMedia('(pointer: fine)').matches) { cursor.classList.add('hovering'); playHoverSFX(); } });
                     el.addEventListener('mouseleave', () => { cursor.classList.remove('hovering'); });
                     el.addEventListener('click', () => { playClickSFX(); });
                 });
             }
-            
             applyInteractiveEffects();
         });
     </script>
-
 </body>
 </html>
